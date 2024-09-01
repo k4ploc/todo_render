@@ -11,6 +11,9 @@ COPY build.gradle settings.gradle /app/
 COPY gradle /app/gradle
 COPY gradlew /app/
 
+# Dar permisos de ejecución a gradlew
+RUN chmod +x gradlew
+
 # Copiar el directorio src al directorio de trabajo
 COPY src /app/src
 
