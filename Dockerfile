@@ -24,4 +24,4 @@ RUN ./gradlew build --no-daemon -x test
 EXPOSE 8080
 
 # Especificar el comando para ejecutar la aplicación
-CMD ["java", "-jar", "build/libs/todo_back-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "build/libs/todos_back-0.0.1-SNAPSHOT.jar"]
