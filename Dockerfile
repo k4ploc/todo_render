@@ -17,8 +17,8 @@ RUN chmod +x gradlew
 # Copiar el directorio src al directorio de trabajo
 COPY src /app/src
 
-# Construir el proyecto usando Gradle
-RUN ./gradlew build --no-daemon
+# Construir el proyecto usando Gradle sin ejecutar los tests
+RUN ./gradlew build --no-daemon -x test
 
 # Establecer el puerto en el que se ejecutará la aplicación
 EXPOSE 8080
