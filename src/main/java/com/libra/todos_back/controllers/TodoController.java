@@ -26,8 +26,8 @@ public class TodoController {
 
     @PostMapping
     public ResponseEntity createTodo(@RequestBody TodoRequest request) {
-        todoService.createTodo(request);
-        return ResponseEntity.ok().build();
+        var response = todoService.createTodo(request);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")

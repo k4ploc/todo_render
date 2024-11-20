@@ -32,9 +32,10 @@ public class TodoService {
                 .collect(Collectors.toList());
     }
 
-    public void createTodo(TodoRequest request) {
+    public Long createTodo(TodoRequest request) {
         TodoEntity entity = new TodoEntity(request);
-        todoRepository.save(entity);
+        TodoEntity todoCreated = todoRepository.save(entity);
+        return todoCreated.getId();
     }
 
     public void checkUncheck(Long id) {
