@@ -1,26 +1,22 @@
-# Usa una imagen base de OpenJDK 17
-FROM openjdk:17-jdk-alpine
-
-# Establece el directorio de trabajo dentro del contenedor
+# Etapa de construcción
+FROM gradle:7.6.0-jdk17-alpine AS build
 WORKDIR /app
 
-# Copia el archivo Gradle Wrapper y los archivos de construcción
-COPY gradlew .
-COPY gradle/ gradle/
-COPY build.gradle .
-COPY settings.gradle .
-
-# Copia el resto de los archivos del proyecto
-COPY src/ src/
-
-# Da permisos de ejecución al Gradle Wrapper
+# Copia los archivos necesarios para construir el proyecto
+COPY build.gradle settings.gradle gradlew ./
+COPY gradle/ ./gradle/
+COPY src/ ./src/
 RUN chmod +x gradlew
 
-# Ejecuta el build de Gradle para crear el JAR, saltando los tests
+# Ejecuta el build de Gradle para crear el JAR
 RUN ./gradlew build -x test
 
-# Copia el archivo JAR generado al contenedor
-COPY build/libs/todos_back-0.0.1-SNAPSHOT.jar app.jar
+# Etapa de ejecución
+FROM openjdk:17-jdk-alpine
+WORKDIR /app
+
+# Copia el archivo JAR generado desde la etapa de construcción
+COPY --from=build /app/build/libs/todos_back-0.0.1-SNAPSHOT.jar app.jar
 
 # Expone el puerto en el que se ejecutará la aplicación
 EXPOSE 8080

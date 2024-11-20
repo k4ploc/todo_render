@@ -26,6 +26,8 @@ public class TodoController {
 
     @PostMapping
     public ResponseEntity createTodo(@RequestBody TodoRequest request) {
+        System.out.println("Create: "+request);
+
         var response = todoService.createTodo(request);
         return ResponseEntity.ok(response);
     }
@@ -44,7 +46,7 @@ public class TodoController {
 
     @PutMapping()
     public ResponseEntity checkUncheck(@RequestBody TodoUpdateRequest request) {
-        System.out.println(request);
+        System.out.println("Update: "+request);
         todoService.updateTodo(request);
         return ResponseEntity.ok().build();
     }
